@@ -90,7 +90,7 @@ public class Tabuleiro implements CampoObservador {
 			final int aleatorio = (int) (rand.nextDouble() * campos.size());
 			final Campo campoAleatorio = campos.get(aleatorio);
 			campoAleatorio.mine();
-		} while (minasArmadas < mines);
+		} while (minasArmadas < mines - 1);
 	}
 
 	private void notifyObservers(final boolean result) {
