@@ -9,10 +9,12 @@ import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class ButtonField extends JButton implements CampoObservador, MouseListener {
+class ButtonField extends JButton implements CampoObservador, MouseListener, ComponentListener {
 
 	public static final long serialVersionUID = 8933602135436682102L;
 
@@ -21,19 +23,26 @@ class ButtonField extends JButton implements CampoObservador, MouseListener {
 	private static final Color BG_MARKED = new Color(8, 179, 247);
 	private static final Color BG_EXPLOSION = new Color(189, 66, 68);
 	private final transient Campo field;
-
+	
+	private final String FONT_TYPE = Font.SANS_SERIF;
+	private final int FONT_FORM = Font.BOLD; 
+	private final int DEFAULT_SIZE = 25;
+	private final int numberOfLines;
+	
 	public Campo getField() {
 		return field;
 	}
 
-	public ButtonField(final Campo field) {
+	public ButtonField(final Campo field, final int lines) {
 		super();
 		this.field = field;
+		this.numberOfLines = lines;
 		setBorder(BorderFactory.createBevelBorder(0));
-		setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
+		setFont(new Font(FONT_TYPE, FONT_FORM, DEFAULT_SIZE));
 		setBackground(BG_DEFAULT);
 
 		addMouseListener(this);
+		addComponentListener(this);
 		field.registerObserver(this);
 	}
 
@@ -115,5 +124,30 @@ class ButtonField extends JButton implements CampoObservador, MouseListener {
 	@Override
 	public void mouseExited(final MouseEvent mouseEvent) {
 		// Não utilizado
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		//Não utilizado
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		//Não utilizado
+		
+	}
+
+	@Override
+	public void componentResized(final ComponentEvent componentEvent) {
+		final int height = this.getHeight();
+		this.setFont(new Font(FONT_TYPE, FONT_FORM, DEFAULT_SIZE * height/numberOfLines));
+		getRootPane().revalidate();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		//Não utilizado
+		
 	}
 }

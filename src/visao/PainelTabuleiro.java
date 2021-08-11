@@ -14,7 +14,7 @@ public class PainelTabuleiro extends JPanel {
 		super();
 		setLayout(new GridLayout(tabuleiro.getLines(), tabuleiro.getColumns()));
 
-		tabuleiro.forEach(c -> add(new ButtonField(c)));
+		tabuleiro.forEach(c -> add(new ButtonField(c, tabuleiro.getLines())));
 		tabuleiro.registerObserver(e -> {
 			SwingUtilities.invokeLater(() -> {
 				if (e.booleanValue()) {
