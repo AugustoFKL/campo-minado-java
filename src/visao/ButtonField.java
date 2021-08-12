@@ -24,9 +24,9 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 	private static final Color BG_EXPLOSION = new Color(189, 66, 68);
 	private final transient Campo field;
 	
-	private final String FONT_TYPE = Font.SANS_SERIF;
-	private final int FONT_FORM = Font.BOLD; 
-	private final int DEFAULT_SIZE = 25;
+	private static final String FONT_TYPE = Font.SANS_SERIF;
+	private static final int FONT_FORM = Font.BOLD; 
+	private static final int DEFAULT_SIZE = 25;
 	private final int numberOfLines;
 	
 	public Campo getField() {
@@ -61,6 +61,8 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 			applyMarkedStyle();
 			break;
 		case EXPLODIR:
+			applyExplosionStyle();
+			break;
 		case REINICIAR:
 		case DESMARCAR:
 		default:
