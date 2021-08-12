@@ -119,7 +119,6 @@ public class Campo {
 				notifyObservers(CampoEvento.EXPLODIR);
 				return;
 			}
-			setOpenStatus(true);
 
 			if (safeNeighbourhood()) {
 				neighbours.forEach(Campo::open);
