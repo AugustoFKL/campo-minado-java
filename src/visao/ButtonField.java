@@ -69,6 +69,8 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 			applyUnmarkedStyle();
 			break;
 		}
+		
+		revalidate();
 	}
 
 	private void applyExplosionStyle() {
@@ -143,7 +145,8 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 	@Override
 	public void componentResized(final ComponentEvent componentEvent) {
 		final int height = this.getHeight();
-		this.setFont(new Font(FONT_TYPE, FONT_FORM, DEFAULT_SIZE * height/numberOfLines));
+		int proposedSize = (int) (height - (height * 0.10));
+		this.setFont(new Font(FONT_TYPE, FONT_FORM, proposedSize));
 		getRootPane().revalidate();
 	}
 
