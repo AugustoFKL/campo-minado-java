@@ -14,17 +14,15 @@ public class PainelTabuleiro extends JPanel {
 		super();
 		setLayout(new GridLayout(tabuleiro.getLines(), tabuleiro.getColumns()));
 
-		tabuleiro.forEach(c -> add(new ButtonField(c, tabuleiro.getLines())));
-		tabuleiro.registerObserver(e -> {
-			SwingUtilities.invokeLater(() -> {
-				if (e.booleanValue()) {
-					JOptionPane.showMessageDialog(this, "Ganhou!");
-				} else {
-					JOptionPane.showMessageDialog(this, "Perdeu.");
-				}
+		tabuleiro.forEach(c -> add(new ButtonField(c)));
+		tabuleiro.registerObserver(e -> SwingUtilities.invokeLater(() -> {
+			if (e.booleanValue()) {
+				JOptionPane.showMessageDialog(this, "Ganhou!");
+			} else {
+				JOptionPane.showMessageDialog(this, "Perdeu.");
+			}
 
-				tabuleiro.restart();
-			});
-		});
+			tabuleiro.restart();
+		}));
 	}
 }

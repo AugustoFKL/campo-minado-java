@@ -44,7 +44,7 @@ public class Campo {
 		final int deltaColumn = Math.abs(getColumn() - neighbour.column);
 		final int deltaGeneral = deltaColumn + deltaLine;
 
-		if (deltaGeneral == 1 && !diagonal || deltaGeneral == 2 && diagonal) {
+		if (deltaGeneral == 1 || deltaGeneral == 2 && diagonal) {
 			neighbours.add(neighbour);
 		}
 	}

@@ -14,7 +14,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-class ButtonField extends JButton implements CampoObservador, MouseListener, ComponentListener {
+public class ButtonField extends JButton implements CampoObservador, MouseListener, ComponentListener {
 
 	public static final long serialVersionUID = 8933602135436682102L;
 
@@ -22,21 +22,55 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 	private static final Color BG_DEFAULT_OPEN = new Color(150, 150, 150);
 	private static final Color BG_MARKED = new Color(8, 179, 247);
 	private static final Color BG_EXPLOSION = new Color(189, 66, 68);
+	private static final String DEFAULT_TEXT = "";
+	private static final String EXPLOSION_TEXT = "X";
+	private static final String MARKED_TEXT = "M";
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static Color getBgDefault() {
+		return BG_DEFAULT;
+	}
+
+	public static Color getBgDefaultOpen() {
+		return BG_DEFAULT_OPEN;
+	}
+
+	public static Color getBgMarked() {
+		return BG_MARKED;
+	}
+
+	public static Color getBgExplosion() {
+		return BG_EXPLOSION;
+	}
+
+	public static String getDefaultText() {
+		return DEFAULT_TEXT;
+	}
+
+	public static String getExplosionText() {
+		return EXPLOSION_TEXT;
+	}
+
+	public static String getMarkedText() {
+		return MARKED_TEXT;
+	}
+
 	private final transient Campo field;
-	
+
 	private static final String FONT_TYPE = Font.SANS_SERIF;
-	private static final int FONT_FORM = Font.BOLD; 
+	private static final int FONT_FORM = Font.BOLD;
 	private static final int DEFAULT_SIZE = 25;
-	private final int numberOfLines;
-	
+
 	public Campo getField() {
 		return field;
 	}
 
-	public ButtonField(final Campo field, final int lines) {
+	public ButtonField(final Campo field) {
 		super();
 		this.field = field;
-		this.numberOfLines = lines;
 		setBorder(BorderFactory.createBevelBorder(0));
 		setFont(new Font(FONT_TYPE, FONT_FORM, DEFAULT_SIZE));
 		setBackground(BG_DEFAULT);
@@ -69,23 +103,23 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 			applyUnmarkedStyle();
 			break;
 		}
-		
+
 		revalidate();
 	}
 
 	private void applyExplosionStyle() {
 		setBackground(BG_EXPLOSION);
-		setText("X");
+		setText(EXPLOSION_TEXT);
 	}
 
 	private void applyMarkedStyle() {
 		setBackground(BG_MARKED);
-		setText("M");
+		setText(MARKED_TEXT);
 	}
 
 	private void applyUnmarkedStyle() {
 		setBackground(BG_DEFAULT);
-		setText("");
+		setText(DEFAULT_TEXT);
 	}
 
 	private void applyOpenStyle() {
@@ -132,14 +166,14 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 
 	@Override
 	public void componentHidden(ComponentEvent arg0) {
-		//Não utilizado
-		
+		// Não utilizado
+
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent arg0) {
-		//Não utilizado
-		
+		// Não utilizado
+
 	}
 
 	@Override
@@ -147,12 +181,11 @@ class ButtonField extends JButton implements CampoObservador, MouseListener, Com
 		final int height = this.getHeight();
 		int proposedSize = (int) (height - (height * 0.10));
 		this.setFont(new Font(FONT_TYPE, FONT_FORM, proposedSize));
-		getRootPane().revalidate();
 	}
 
 	@Override
 	public void componentShown(ComponentEvent arg0) {
-		//Não utilizado
-		
+		// Não utilizado
+
 	}
 }
