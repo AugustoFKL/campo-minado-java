@@ -23,7 +23,7 @@ public class PainelTabuleiro extends JPanel {
 			final String resultado = e.booleanValue() ? "Ganhou" : "Perdeu";
 			JOptionPane.showMessageDialog(this, resultado);
 
-			DBGame.saveGame(tabuleiro, "resultado");
+			DBGame.saveGame(tabuleiro, resultado);
 			tabuleiro.restart();
 		}));
 	}
