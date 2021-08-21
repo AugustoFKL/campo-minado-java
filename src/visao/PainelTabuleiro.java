@@ -4,6 +4,10 @@ import modelo.Tabuleiro;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
+import jdbc.FabricaConexao;
+import jdbc.DBGame;
+
 import java.awt.GridLayout;
 
 public class PainelTabuleiro extends JPanel {
@@ -16,12 +20,10 @@ public class PainelTabuleiro extends JPanel {
 
 		tabuleiro.forEach(c -> add(new ButtonField(c)));
 		tabuleiro.registerObserver(e -> SwingUtilities.invokeLater(() -> {
-			if (e.booleanValue()) {
-				JOptionPane.showMessageDialog(this, "Ganhou!");
-			} else {
-				JOptionPane.showMessageDialog(this, "Perdeu.");
-			}
+			final String resultado = e.booleanValue() ? "Ganhou" : "Perdeu";
+			JOptionPane.showMessageDialog(this, resultado);
 
+			DBGame.saveGame(tabuleiro, "resultado");
 			tabuleiro.restart();
 		}));
 	}
