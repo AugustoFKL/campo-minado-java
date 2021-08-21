@@ -14,6 +14,7 @@ public class Tabuleiro implements CampoObservador {
 	private final int mines;
 	private final List<Campo> campos = new ArrayList<>();
 	private final List<Consumer<Boolean>> observers = new ArrayList<>();
+	final Random rand = new Random();
 
 	public Tabuleiro(final int lines, final int columns, final int mines) {
 		this.lines = lines;
@@ -46,21 +47,21 @@ public class Tabuleiro implements CampoObservador {
 	}
 
 	public void registerObserver(final Consumer<Boolean> observer) {
-		observers.add(observer);
+		getObservers().add(observer);
 	}
 
 	public void forEach(final Consumer<Campo> function) {
-		campos.forEach(function);
+		getCampos().forEach(function);
 	}
 
 	public void restart() {
-		campos.forEach(Campo::restart);
+		getCampos().forEach(Campo::restart);
 		sortearMinas();
 
 	}
 
 	public boolean objectiveAchieved() {
-		return campos.stream().allMatch(Campo::objectiveAchieved);
+		return getCampos().stream().allMatch(Campo::objectiveAchieved);
 	}
 
 	private void generateField() {
@@ -69,14 +70,14 @@ public class Tabuleiro implements CampoObservador {
 			for (int j = 0; j < columns; j++) {
 				campo = Campo.createNewCampo(i, j);
 				campo.registerObserver(this);
-				campos.add(campo);
+				getCampos().add(campo);
 			}
 		}
 	}
 
 	private void associarVizinhos() {
-		for (final Campo c1 : campos) {
-			for (final Campo c2 : campos) {
+		for (final Campo c1 : getCampos()) {
+			for (final Campo c2 : getCampos()) {
 				c1.addNeighbour(c2);
 			}
 		}
@@ -84,21 +85,20 @@ public class Tabuleiro implements CampoObservador {
 
 	private void sortearMinas() {
 		long minasArmadas;
-		final Random rand = new Random();
 		do {
-			minasArmadas = campos.stream().filter(Campo::isMineStatus).count();
-			final int aleatorio = (int) (rand.nextDouble() * campos.size());
-			final Campo campoAleatorio = campos.get(aleatorio);
+			minasArmadas = getCampos().stream().filter(Campo::isMineStatus).count();
+			final int aleatorio = (int) (rand.nextDouble() * getCampos().size());
+			final Campo campoAleatorio = getCampos().get(aleatorio);
 			campoAleatorio.mine();
-		} while (minasArmadas < mines - 1);
+		} while (minasArmadas < getMines() - 1);
 	}
 
 	private void notifyObservers(final boolean result) {
-		observers.forEach(o -> o.accept(result));
+		getObservers().forEach(o -> o.accept(result));
 	}
 
 	private void showMines() {
-		campos.stream().filter(Campo::isMineStatus).filter(c -> !c.isMarkStatus()).forEach(c -> c.setOpenStatus(true));
+		getCampos().stream().filter(Campo::isMineStatus).filter(c -> !c.isMarkStatus()).forEach(c -> c.setOpenStatus(true));
 	}
 
 	@Override
